@@ -10,7 +10,7 @@ echo "Error: " . $_FILES['archivo']['error'] . "<br>";
   
   if (!((strpos($tipo_archivo, "sql")))) {
   	$alerta="nosql";
-  	/*MODIFICAR*/ 	header ( "Location: enviar_archivo.php?alerta=$alerta" );
+  	/*MODIFICAR*/ header ( "Location: enviar_archivo.php?alerta=$alerta" );
   }   
   
 /*--- DESACTIVAR PARA VER LAS PROPIEDADES DEL ARCHIVO ---
@@ -23,17 +23,17 @@ echo "Error: " . $_FILES['archivo']['error'] . "<br>";
   }
 */
  
- /*--- MUEVE EL ARCHIVO A OTRO LUGAR ---
-  * move_uploaded_file($_FILES['archivo']['tmp_name'], "C:" . $_FILES['archivo']['name']);
-  */
+/*--- MUEVE EL ARCHIVO A OTRO LUGAR ---
+ * move_uploaded_file($_FILES['archivo']['tmp_name'], "C:" . $_FILES['archivo']['name']);
+ */
 
  $fecha = Date ( "Ymd" );
  
- $filename = $_FILES['archivo']['tmp_name'];//'churc.sql';
+ $filename = $_FILES['archivo']['tmp_name']; // Ejemplo 'bd_personas.sql';
  
- /*MODIFICAR*/$mysql_database = 'inventariob';//nombre la base de datos
- /*MODIFICAR*/$table = 'articulo';//Nombre de la tabla a importar
- /*MODIFICAR*/$tableReemplace = "filial_".$fecha;//Nombre de la nueva tabla ej.: parana_20151212
+ /*MODIFICAR*/$mysql_database = 'prueba_exportacion';//nombre la base de datos
+ /*MODIFICAR*/$table = 'escala';//Nombre de la tabla a importar
+ /*MODIFICAR*/$tableReemplace = "TBimportada_".$fecha;//Nombre de la nueva tabla ej.: parana_20151212
    
  mysql_select_db($mysql_database) or die('Error al seleccionar la Base de Datos: ' . mysql_error());
  

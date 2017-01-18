@@ -2,6 +2,7 @@
 session_start();
 include ("conexion.inc.php");
 ?>
+
 <!DOCTYPE html>
 <!-- Este doc. es para enviar el archivo .sql -->
 <html>
@@ -23,10 +24,5 @@ include ("conexion.inc.php");
 	<form action="archivo.php" method="post" enctype="multipart/form-data">
 		<input type="file" onchange="this.form.submit()" name="archivo"/>
 	</form>
-   
-   
-   
-   
-   
    </body>
 </html>
