@@ -8,26 +8,26 @@
 $dbhost   = "127.0.0.1";
 $dbuser   = "root";
 $dbpwd    = "admin";
-/*MODIFICAR*/$dbname   = "inventario"; //Nombre de la BD
-/*MODIFICAR*/$table = "articulo"; //Nombre de la tabla a copiar
-/*MODIFICAR*/$filename = "bd_copia.sql";//Nombre del archivo con el que se guardará
+/*MODIFICAR*/$dbname   = "vtaordenes"; //Nombre de la BD
+/*MODIFICAR*/$table = "ordvendidas"; //Nombre de la tabla a copiar
+/*MODIFICAR*/$filename = "ordvendidas_".date("Y-m-d_H-i-s").".sql";//Nombre del archivo con el que se guardará
 
-passthru("C:\\AppServ\\MySQL\\bin\\mysqldump.exe -p --host=$dbhost --user=$dbuser --password=$dbpwd $dbname $table > $filename");
+passthru("C:\\AppServ\\MySQL\\bin\\mysqldump.exe --complete-insert --host=$dbhost --user=$dbuser --password=$dbpwd $dbname $table > C:\\ARCHIVOS\\$filename");
 
-//echo "$dumpfile "; 
+//echo "$dumpfile"; 
 
 passthru("tail -1 $filename");
 
-/* Vacia la tabla */
-$link = mysqli_connect($dbhost, $dbuser, $dbpwd);
-/*MODIFICAR*/ mysqli_select_db($link, "inventario");
-/*MODIFICAR*/ mysqli_query($link, "TRUNCATE TABLE articulo");
+//Vaciar la tabla?
+//$link = mysqli_connect($dbhost, $dbuser, $dbpwd);
+/*MODIFICAR*/ //mysqli_select_db($link, "inventario");
+/*MODIFICAR*/ //mysqli_query($link, "TRUNCATE TABLE articulo");
 /* -------------- */
 
 if ( !mysql_error ())
 {
-	$alerta="correcto";//la tabla fue guardada correctamente
-/*MODIFICAR*/	header ( "Location: [ruta].php?alerta=$alerta" );
+	$alerta="okexport";//la tabla fue guardada correctamente
+/*MODIFICAR*/	header ( "Location: ppal.php?alerta=$alerta" );
 } else {
 	echo " ERROR al grabar sus datos. Envie un mail a programacion@camionerosentrerios.com con el nro. de Error." . "<br><br>" . "El error es:" . mysql_errno () . " - " . mysql_error () . "<br>";
 	switch (mysql_errno ()) {

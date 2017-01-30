@@ -10,7 +10,7 @@ echo "Error: " . $_FILES['archivo']['error'] . "<br>";
   
   if (!((strpos($tipo_archivo, "sql")))) {
   	$alerta="nosql";
-  	/*MODIFICAR*/ header ( "Location: enviar_archivo.php?alerta=$alerta" );
+  	/*MODIFICAR*/ header ( "Location: ppal.php?alerta=$alerta" );
   }   
   
 /*--- DESACTIVAR PARA VER LAS PROPIEDADES DEL ARCHIVO ---
@@ -31,10 +31,10 @@ echo "Error: " . $_FILES['archivo']['error'] . "<br>";
  
  $filename = $_FILES['archivo']['tmp_name']; // Ejemplo 'bd_personas.sql';
  
- /*MODIFICAR*/$mysql_database = 'prueba_exportacion';//nombre la base de datos
- /*MODIFICAR*/$table = 'escala';//Nombre de la tabla a importar
- /*MODIFICAR*/$tableReemplace = "TBimportada_".$fecha;//Nombre de la nueva tabla ej.: parana_20151212
-   
+ /*MODIFICAR*/$mysql_database = 'vtaordenes';//nombre la base de datos
+ /*MODIFICAR*/$table = 'titufami';//Nombre de la tabla a importar
+ /*MODIFICAR*/$tableReemplace = "titufami_".$fecha;//Nombre de la nueva tabla ej.: parana_20151212
+
  mysql_select_db($mysql_database) or die('Error al seleccionar la Base de Datos: ' . mysql_error());
  
  //Variable temporal para usarlo en la consulta
@@ -65,8 +65,8 @@ echo "Error: " . $_FILES['archivo']['error'] . "<br>";
  
  if ( !mysql_error ()) 
  {
- 	$alerta="La Tabla fue importada correctamente";
-/*MODIFICAR*/ 	header ( "Location: [ruta].php?alerta=$alerta" );
+ 	$alerta="okimport";
+/*MODIFICAR*/ 	header ( "Location: ppal.php?alerta=$alerta" );
  } else {
  	echo " ERROR al grabar sus datos. Envie un mail a programacion@camionerosentrerios.com con el nro. de Error." . "<br><br>" . "El error es:" . mysql_errno () . " - " . mysql_error () . "<br>";
  	switch (mysql_errno ()) {

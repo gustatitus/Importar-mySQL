@@ -1,1 +1,0 @@
-el archivo enviar_archivo.php es el archivo principal.
