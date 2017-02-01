@@ -29,6 +29,12 @@ include ("conexion.inc.php");
 				alert("ATENCI\u00d3N: El archivo fue creado correctamente.");
 			</script>
 		<?; break;
+	case 'notitufami':
+		?>
+			<script>
+				alert("NO PERMITIDO: Debe ser un archivo titufami.sql");
+			</script>
+		<?; break;
     }?>
     </head>
     <body>

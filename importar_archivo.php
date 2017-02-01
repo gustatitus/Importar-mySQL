@@ -2,40 +2,43 @@
 session_start();
 include ("conexion.inc.php");
 
-if ($_FILES['archivo']["error"] > 0){
-echo "Error: " . $_FILES['archivo']['error'] . "<br>";
-  }
-  
-  $tipo_archivo = $HTTP_POST_FILES['userfile']['type'];
-  
-  if (!((strpos($tipo_archivo, "sql")))) {
-  	$alerta="nosql";
-  	/*MODIFICAR*/ header ( "Location: ppal.php?alerta=$alerta" );
-  }   
-  
-/*--- DESACTIVAR PARA VER LAS PROPIEDADES DEL ARCHIVO ---
- * else
-  {
+/*
+  --- DESACTIVAR PARA VER LAS PROPIEDADES DEL ARCHIVO ---
   echo "Nombre: " . $_FILES['archivo']['name'] . "<br>";
   echo "Tipo: " . $_FILES['archivo']['type'] . "<br>";
   echo "Tamaño: " . ($_FILES["archivo"]["size"] / 1024) . " kB<br>";
   echo "Carpeta temporal: " . $_FILES['archivo']['tmp_name'];
-  }
-*/
  
-/*--- MUEVE EL ARCHIVO A OTRO LUGAR ---
- * move_uploaded_file($_FILES['archivo']['tmp_name'], "C:" . $_FILES['archivo']['name']);
- */
+ --- MUEVE EL ARCHIVO A OTRO LUGAR ---
+  move_uploaded_file($_FILES['archivo']['tmp_name'], "C:" . $_FILES['archivo']['name']);
+*/
 
+/* VALIDACIONES DE ARCHIVO titufami.sql */
+if ( $_FILES['archivo']["error"] > 0 ){
+    echo "Error: " . $_FILES['archivo']['error'] . "<br>";
+  }
+
+if ( $_FILES['archivo']['name'] != 'titufami.sql' ){
+    $alerta="notitufami";
+    //echo "debe ser titufami.sql";
+    /*MODIFICAR*/ header ( "Location: ppal.php?alerta=$alerta" );
+  }
+  
+if ( $_FILES['archivo']['type'] != 'application/octet-stream' ){
+    $alerta="nosql";
+    //echo "No es un archivo sql";
+    /*MODIFICAR*/ header ( "Location: ppal.php?alerta=$alerta" );
+  }
+/* ----------------------------------- */   
+  
  $fecha = Date ( "Ymd" );
  
  $filename = $_FILES['archivo']['tmp_name']; // Ejemplo 'bd_personas.sql';
  
- /*MODIFICAR*/$mysql_database = 'vtaordenes';//nombre la base de datos
  /*MODIFICAR*/$table = 'titufami';//Nombre de la tabla a importar
  /*MODIFICAR*/$tableReemplace = "titufami_".$fecha;//Nombre de la nueva tabla ej.: parana_20151212
 
- mysql_select_db($mysql_database) or die('Error al seleccionar la Base de Datos: ' . mysql_error());
+ mysql_select_db($dbname) or die('Error al seleccionar la Base de Datos: ' . mysql_error());
  
  //Variable temporal para usarlo en la consulta
  $templine = '';
@@ -62,7 +65,11 @@ echo "Error: " . $_FILES['archivo']['error'] . "<br>";
  		$templine = '';
  	}
  }
- 
+
+//Elimina titufami anterior y renombra la tabla nueva creada por titufami
+mysql_query( "DROP TABLE IF EXISTS titufami" );
+mysql_query( "RENAME TABLE ".$tableReemplace." TO titufami" );
+
  if ( !mysql_error ()) 
  {
  	$alerta="okimport";
